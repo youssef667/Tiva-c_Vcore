@@ -14,6 +14,7 @@ set OBJ_DIR=output\obj
 set OUTPUT=%OUTPUT_DIR%\project
 set ELF_FILE=%OUTPUT%.elf
 set HEX_FILE=%OUTPUT%.hex
+set MAP_FILE=%OUTPUT%.map
 
 REM Create the output and object directories if they do not exist
 if not exist %OUTPUT_DIR% (
@@ -50,9 +51,9 @@ for %%f in (%OBJ_DIR%\*.o) do (
     set OBJECT_FILES=!OBJECT_FILES! "%%f"
 )
 
-REM Link the object files
+REM Link the object files and generate map file
 echo Linking object files...
-"%IAR_PATH%\ilinkarm" !OBJECT_FILES! --config %LINKER_SCRIPT% -o %ELF_FILE%
+"%IAR_PATH%\ilinkarm" !OBJECT_FILES! --config %LINKER_SCRIPT% --map %MAP_FILE% -o %ELF_FILE%
 if %errorlevel% neq 0 (
     echo Error: Linking failed
     exit /b 1
@@ -67,6 +68,8 @@ if %errorlevel% neq 0 (
 )
 
 echo Build complete. HEX file generated: %HEX_FILE%
+echo Map file generated: %MAP_FILE%
+
 
 
 

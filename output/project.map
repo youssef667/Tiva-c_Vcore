@@ -1,0 +1,164 @@
+﻿###############################################################################
+#
+# IAR ELF Linker V9.30.1.335/W64 for ARM                  03/Jul/2024  18:36:42
+# Copyright 2007-2022 IAR Systems AB.
+#
+#    Output file  =  output\project.elf
+#    Map file     =  output\project.map
+#    Command line =
+#        output\obj\main.o --config "C:\Program Files\IAR Systems\Embedded
+#        Workbench 9.1\arm\config\linker\TexasInstruments\TM4C123GH6.icf" --map
+#        output\project.map -o output\project.elf
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__CPP_Runtime   = 1
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because --advanced_heap
+was not specified and the application did not appear to
+be primarily optimized for speed.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at address 0x0 { ro section .intvec };
+"P1":  place in [from 0x0 to 0x3'ffff] { ro };
+define block CSTACK with size = 4K, alignment = 8 { };
+define block HEAP with size = 8K, alignment = 8 { };
+"P2":  place in [from 0x2000'0000 to 0x2000'7fff] {
+          rw, block CSTACK, block HEAP };
+
+No sections matched the following patterns:
+
+  rw  in "P2"
+
+
+  Section   Kind         Address    Size  Object
+  -------   ----         -------    ----  ------
+"A0":                               0x40
+  .intvec   ro code          0x0    0x40  vector_table_M.o [3]
+                          - 0x40    0x40
+
+"P1":                              0x158
+  .text     ro code         0x40    0xf4  main.o [1]
+  .text     ro code        0x134    0x1e  cmain.o [3]
+  .text     ro code        0x152     0x4  low_level_init.o [2]
+  .text     ro code        0x156     0x4  exit.o [2]
+  .text     ro code        0x15a     0x2  vectortrap_M.o [3]
+  .text     ro code        0x15c     0xa  cexit.o [3]
+  .text     ro code        0x168     0xc  XXexit.o [3]
+  .text     ro code        0x174    0x1c  cstartup_M.o [3]
+  .rodata   const          0x190     0x8  main.o [1]
+                         - 0x198   0x158
+
+"P2":                             0x1000
+  CSTACK             0x2000'0000  0x1000  <Block>
+    CSTACK  uninit   0x2000'0000  0x1000  <Block tail>
+                   - 0x2000'1000  0x1000
+
+Unused ranges:
+
+         From           To      Size
+         ----           --      ----
+        0x198     0x3'ffff  0x3'fe68
+  0x2000'1000  0x2000'7fff    0x7000
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module            ro code  ro data  rw data
+    ------            -------  -------  -------
+command line/config:
+    -------------------------------------------
+    Total:
+
+G:\youssef malak\Tiva-c_Vcore\output\obj: [1]
+    main.o                244        8
+    -------------------------------------------
+    Total:                244        8
+
+dl7M_tln.a: [2]
+    exit.o                  4
+    low_level_init.o        4
+    -------------------------------------------
+    Total:                  8
+
+rt7M_tl.a: [3]
+    XXexit.o               12
+    cexit.o                10
+    cmain.o                30
+    cstartup_M.o           28
+    vector_table_M.o       64
+    vectortrap_M.o          2
+    -------------------------------------------
+    Total:                146
+
+    Gaps                    2
+    Linker created                        4'096
+-----------------------------------------------
+    Grand Total:          400        8    4'096
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                     Address  Size  Type      Object
+-----                     -------  ----  ----      ------
+?main                       0x135        Code  Gb  cmain.o [3]
+BusFault_Handler            0x15b        Code  Wk  vectortrap_M.o [3]
+CSTACK$$Base          0x2000'0000         --   Gb  - Linker created -
+CSTACK$$Limit         0x2000'1000         --   Gb  - Linker created -
+DebugMon_Handler            0x15b        Code  Wk  vectortrap_M.o [3]
+HardFault_Handler           0x15b        Code  Wk  vectortrap_M.o [3]
+Leds_Init                    0x7f  0x3e  Code  Gb  main.o [1]
+MemManage_Handler           0x15b        Code  Wk  vectortrap_M.o [3]
+NMI_Handler                 0x15b        Code  Wk  vectortrap_M.o [3]
+PendSV_Handler              0x15b        Code  Wk  vectortrap_M.o [3]
+Region$$Table$$Base           0x0         --   Gb  - Linker created -
+Region$$Table$$Limit          0x0         --   Gb  - Linker created -
+SVC_Handler                 0x15b        Code  Wk  vectortrap_M.o [3]
+SysTickDisable               0x41   0xe  Code  Gb  main.o [1]
+SysTickEnable                0x4f   0xc  Code  Gb  main.o [1]
+SysTickPeriodSet             0x5b  0x24  Code  Gb  main.o [1]
+SysTick_Handler             0x15b        Code  Wk  vectortrap_M.o [3]
+UsageFault_Handler          0x15b        Code  Wk  vectortrap_M.o [3]
+__cmain                     0x135        Code  Gb  cmain.o [3]
+__exit                      0x169        Code  Gb  XXexit.o [3]
+__iar_program_start         0x175        Code  Gb  cstartup_M.o [3]
+__low_level_init            0x153   0x4  Code  Gb  low_level_init.o [2]
+__vector_table                0x0        Data  Gb  vector_table_M.o [3]
+_call_main                  0x141        Code  Gb  cmain.o [3]
+_exit                       0x15d        Code  Gb  cexit.o [3]
+exit                        0x157   0x4  Code  Gb  exit.o [2]
+frecuency                   0x190   0x8  Data  Gb  main.o [1]
+main                         0xbd  0x4c  Code  Gb  main.o [1]
+
+
+[1] = G:\youssef malak\Tiva-c_Vcore\output\obj
+[2] = dl7M_tln.a
+[3] = rt7M_tl.a
+
+    400 bytes of readonly  code memory
+      8 bytes of readonly  data memory
+  4'096 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
