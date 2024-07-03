@@ -1,6 +1,5 @@
-
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 
 REM Set the path to IAR Embedded Workbench tools
 set IAR_PATH=C:\Program Files\IAR Systems\Embedded Workbench 9.1\arm\bin
@@ -35,7 +34,7 @@ if not exist %OBJ_DIR% (
 REM Set the full path to the linker script
 set LINKER_SCRIPT="C:\Program Files\IAR Systems\Embedded Workbench 9.1\arm\config\linker\TexasInstruments\TM4C123GH6.icf"
 
-REM Compile the source files to object files
+REM Compile each source file to an object file
 echo Compiling source files...
 for %%f in (%SOURCES%) do (
     "%IAR_PATH%\iccarm" %%f %INCLUDES% --cpu Cortex-M4 --thumb -o %OBJ_DIR%\%%~nf.o
@@ -44,9 +43,16 @@ for %%f in (%SOURCES%) do (
         exit /b 1
     )
 )
+
+REM List all object files in the object directory
+set "OBJECT_FILES="
+for %%f in (%OBJ_DIR%\*.o) do (
+    set OBJECT_FILES=!OBJECT_FILES! "%%f"
+)
+
 REM Link the object files
 echo Linking object files...
-"%IAR_PATH%\ilinkarm" %OBJ_DIR%\main.o --config %LINKER_SCRIPT% -o %ELF_FILE%
+"%IAR_PATH%\ilinkarm" !OBJECT_FILES! --config %LINKER_SCRIPT% -o %ELF_FILE%
 if %errorlevel% neq 0 (
     echo Error: Linking failed
     exit /b 1
@@ -59,7 +65,9 @@ if %errorlevel% neq 0 (
     echo Error: Conversion to HEX failed
     exit /b 1
 )
+
 echo Build complete. HEX file generated: %HEX_FILE%
+
 
 
 endlocal
